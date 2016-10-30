@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import * as React from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class Teamap extends Component {
+export default class Teamap extends React.Component<never, never> {
   render() {
     return (
       <View style={styles.container}>
@@ -20,18 +20,24 @@ export default class Teamap extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.android.js
+          To get started, edit src/index.ios.tsx
         </Text>
         <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
         </Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  container: React.ViewStyle,
+  welcome: React.TextStyle,
+  instructions: React.TextStyle,
+}
+
+const styles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     justifyContent: 'center',

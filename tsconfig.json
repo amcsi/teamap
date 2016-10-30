@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "allowJs": true,
+        "jsx": "react",
+        "outDir": "artifacts",
+        "sourceMap": true,
+        "noImplicitAny": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
