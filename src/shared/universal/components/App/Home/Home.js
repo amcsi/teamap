@@ -1,10 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import Hello from './Hello';
 
 function Home() {
   return (
     <article>
       <Helmet title="Home" />
+
+      <Hello />
 
       <p>
         This starter kit contains all the build tooling and configuration you

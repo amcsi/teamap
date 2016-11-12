@@ -176,6 +176,8 @@ function webpackConfigFactory({ target, mode }, { json }) {
         '.js',
         '.jsx',
         '.json',
+        '.ts',
+        '.tsx',
       ],
     },
     plugins: removeEmpty([
@@ -407,6 +409,10 @@ function webpackConfigFactory({ target, mode }, { json }) {
             ]),
           },
         }],
+        preLoaders: [
+          // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+          { test: /\.js$/, loader: 'source-map-loader' },
+        ],
       }),
 
       // HappyPack 'css' instance for development client.
@@ -424,6 +430,8 @@ function webpackConfigFactory({ target, mode }, { json }) {
     ]),
     module: {
       rules: removeEmpty([
+        // TypeScript
+        { test: /\.tsx?$/, loader: 'ts' },
         // Javascript
         {
           test: /\.jsx?$/,
