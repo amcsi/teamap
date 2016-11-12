@@ -1,6 +1,4 @@
-/* @flow */
 
-import type { $Request, $Response, Middleware } from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { ServerRouter, createServerRenderContext } from 'react-router';
@@ -15,7 +13,7 @@ import configureStore from '../shared/universal/redux/configureStore';
 /**
  * An express middleware that is capabable of doing React server side rendering.
  */
-function universalReactAppMiddleware(request: $Request, response: $Response) {
+function universalReactAppMiddleware(request, response) {
   // We should have had a nonce provided to us.  See the server/index.js for
   // more information on what this is.
   if (typeof response.locals.nonce !== 'string') {
@@ -135,4 +133,4 @@ function universalReactAppMiddleware(request: $Request, response: $Response) {
   }
 }
 
-export default (universalReactAppMiddleware : Middleware);
+export default (universalReactAppMiddleware);

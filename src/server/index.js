@@ -1,4 +1,3 @@
-/* @flow */
 /* eslint-disable no-console */
 
 // This grants us source map support, which combined with our webpack source
@@ -9,7 +8,7 @@ import path from 'path';
 import uuid from 'node-uuid';
 import appRoot from 'app-root-path';
 import express from 'express';
-import type { $Request, $Response, NextFunction } from 'express';
+
 import compression from 'compression';
 import hpp from 'hpp';
 import helmet from 'helmet';
@@ -24,7 +23,7 @@ const app = express();
 // Attach a unique "nonce" to every response.  This allows use to declare
 // inline scripts as being safe for execution against our content security policy.
 // @see https://helmetjs.github.io/docs/csp/
-app.use((req: $Request, res: $Response, next: NextFunction) => {
+app.use((req, res, next) => {
   res.locals.nonce = uuid.v4(); // eslint-disable-line no-param-reassign
   next();
 });
@@ -149,14 +148,14 @@ app.get('*', universalMiddleware);
 // Note: the react application middleware hands 404 paths, but it is good to
 // have this backup for paths not handled by the universal middleware. For
 // example you may bind a /api path to express.
-app.use((req: $Request, res: $Response, next: NextFunction) => { // eslint-disable-line no-unused-vars,max-len
+app.use((req, res, next) => { // eslint-disable-line no-unused-vars,max-len
   res.status(404).send('Sorry, that resource was not found.');
 });
 
 // Handle all other errors (i.e. 500).
 // Note: You must provide specify all 4 parameters on this callback function
 // even if they aren't used, otherwise it won't be used.
-app.use((err: ?Error, req: $Request, res: $Response, next: NextFunction) => { // eslint-disable-line no-unused-vars,max-len
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars,max-len
   if (err) {
     console.log(err);
     console.log(err.stack);

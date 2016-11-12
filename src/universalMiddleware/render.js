@@ -1,6 +1,4 @@
-/* @flow */
 
-import type { Head } from 'react-helmet';
 import serialize from 'serialize-javascript';
 import { STATE_IDENTIFIER } from 'code-split-component';
 import getAssetsForClientChunks from './getAssetsForClientChunks';
@@ -31,7 +29,7 @@ function serviceWorkerScript(nonce) {
   return '';
 }
 
-function styleTags(styles : Array<string>) {
+function styleTags(styles) {
   return styles
     .map(style =>
       `<link href="${style}" media="screen, projection" rel="stylesheet" type="text/css" />`
@@ -39,11 +37,11 @@ function styleTags(styles : Array<string>) {
     .join('\n');
 }
 
-function scriptTag(jsFilePath: string) {
+function scriptTag(jsFilePath) {
   return `<script type="text/javascript" src="${jsFilePath}"></script>`;
 }
 
-function scriptTags(jsFilePaths : Array<string>) {
+function scriptTags(jsFilePaths) {
   return jsFilePaths.map(scriptTag).join('\n');
 }
 
@@ -60,13 +58,6 @@ function developmentVendorDLL() {
   return '';
 }
 
-type RenderArgs = {
-  app?: string,
-  initialState?: Object,
-  nonce: string,
-  helmet?: Head,
-  codeSplitState?: { chunks: Array<string>, modules: Array<string> };
-};
 
 /**
  * Generates a full HTML page containing the render output of the given react
@@ -80,7 +71,7 @@ type RenderArgs = {
  *
  * @return The full HTML page in the form of a React element.
  */
-function render(args: RenderArgs) {
+function render(args) {
   const { app, initialState, nonce, helmet, codeSplitState } = args;
 
   // The chunks that we need to fetch the assets (js/css) for and then include
