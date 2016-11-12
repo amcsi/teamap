@@ -8,11 +8,20 @@ import { BrowserRouter } from 'react-router';
 // splitting within our application.
 // @see https://github.com/ctrlplusb/code-split-component
 import { CodeSplitProvider, rehydrateState } from 'code-split-component';
+import { Provider } from 'react-redux';
+import configureStore from '../shared/universal/redux/configureStore';
 import ReactHotLoader from './components/ReactHotLoader';
+import TaskRoutesExecutor from './components/TaskRoutesExecutor';
 import App from '../shared/universal/components/App';
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector('#app');
+
+// Create our Redux store.
+const store = configureStore(
+  // Server side rendering would have mounted our state on this global.
+  window.APP_STATE
+);
 
 function renderApp(TheApp) {
   // Firstly we ensure that we rehydrate any code split state provided to us
@@ -24,9 +33,16 @@ function renderApp(TheApp) {
     render(
       <ReactHotLoader>
         <CodeSplitProvider state={codeSplitState}>
-          <BrowserRouter>
-            <TheApp />
-          </BrowserRouter>
+          <Provider store={store}>
+            <BrowserRouter>
+              {
+                routerProps =>
+                  <TaskRoutesExecutor {...routerProps} dispatch={store.dispatch}>
+                    <TheApp />
+                  </TaskRoutesExecutor>
+              }
+            </BrowserRouter>
+          </Provider>
         </CodeSplitProvider>
       </ReactHotLoader>,
       container
