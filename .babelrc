@@ -3,4 +3,9 @@
 // This allows us to build up our babel config in a much more dynamic fashion
 // easily targetting a mix mash of server vs browser vs dev vs prod etc.
 // @see webpackConfigFactory.js
-{}
+
+// Attila: But because we are using react-universally together with react-native
+// We are keeping the react-native preset just for react-native.
+{
+"presets": ["react-native"]
+}
