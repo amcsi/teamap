@@ -2,18 +2,41 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import { GoogleMap } from 'react-google-maps';
+import ScriptjsLoader from 'react-google-maps/lib/async/ScriptjsLoader';
 
 function Home() {
+  const containerElement = (
+    <div
+      {...this.props}
+      style={{
+        height: '200px',
+      }}
+    />
+  );
+
+  const googleMapElement = (
+    <GoogleMap
+      defaultZoom={3}
+      defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+      onClick={this.handleMapClick}
+    />
+  );
+
   return (
     <article>
       <Helmet title="Home" />
 
-      <p>
-        This starter kit contains all the build tooling and configuration you
-        need to kick off your next universal react project, whilst containing a
-        minimal project set up allowing you to make your own architecture
-        decisions (redux/mobx etc).
-      </p>
+      <ScriptjsLoader
+        hostname={'maps.googleapis.com'}
+        pathname={'/maps/api/js'}
+        query={{ v: '3.0' }}
+        loadingElement={
+          <div />
+        }
+        containerElement={containerElement}
+        googleMapElement={googleMapElement}
+      />
     </article>
   );
 }

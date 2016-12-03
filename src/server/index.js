@@ -64,6 +64,7 @@ const cspConfig = {
       "'self'",
       // Allow scripts from cdn.polyfill.io so that we can import the polyfill.
       'cdn.polyfill.io',
+      'maps.googleapis.com',
       // Note: We will execution of any inline scripts that have the following
       // nonce identifier attached to them.
       // This is useful for guarding your application whilst allowing an inline
@@ -72,13 +73,13 @@ const cspConfig = {
       // $FlowFixMe
       (req, res) => `'nonce-${res.locals.nonce}'`,
     ],
-    styleSrc: ["'self'", "'unsafe-inline'", 'blob:'],
-    imgSrc: ["'self'", 'data:'],
+    styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com'],
+    imgSrc: ["'self'", 'data:', 'csi.gstatic.com', 'maps.gstatic.com', 'maps.googleapis.com'],
     // Note: Setting this to stricter than * breaks the service worker. :(
     // I can't figure out how to get around this, so if you know of a safer
     // implementation that is kinder to service workers please let me know.
     connectSrc: ['*'], // ["'self'", 'ws:'],
-    fontSrc: ["'self'"],
+    fontSrc: ["'self'", 'fonts.gstatic.com'],
     objectSrc: ["'none'"],
     mediaSrc: ["'none'"],
     childSrc: ["'self'"],
