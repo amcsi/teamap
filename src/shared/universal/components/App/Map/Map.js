@@ -31,7 +31,7 @@ function Map(props : Props) {
     <ScriptjsLoader
       hostname={'maps.googleapis.com'}
       pathname={'/maps/api/js'}
-      query={{ v: '3.0' }}
+      query={{ key: process.env.GOOGLE_MAPS_API_KEY, v: '3.0' }}
       loadingElement={
         <div />
       }
