@@ -22,7 +22,7 @@ function Map(props : Props) {
 
   const googleMapElement = (
     <GoogleMap
-      defaultZoom={3}
+      defaultZoom={15}
       defaultCenter={props.defaultCenter}
     />
   );
