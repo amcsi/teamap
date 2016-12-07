@@ -23,7 +23,7 @@ function App() {
         defaultCenter={defaultCenter}
       />
 
-      <div style={{ padding: '10px' }}>
+      <div style={{ position: 'relative', zIndex: 10, padding: '10px' }}>
         {/*
           All of the following will be injected into our page header.
           @see https://github.com/nfl/react-helmet
