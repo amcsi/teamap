@@ -15,6 +15,8 @@ import hpp from 'hpp';
 import helmet from 'helmet';
 import universalMiddleware from './middleware/universalMiddleware';
 import { notEmpty } from '../shared/universal/utils/guards';
+import fs from 'fs';
+import https from 'https';
 
 const appRootPath = appRoot.toString();
 
@@ -170,6 +172,18 @@ const port = parseInt(notEmpty(process.env.SERVER_PORT), 10);
 const listener = app.listen(port, () =>
   console.log(`Server listening on port ${port}`)
 );
+
+// HTTPS
+if (process.env.HTTPS_SSL_KEY_FILE) {
+  const options = {
+    key: fs.readFileSync(process.env.HTTPS_SSL_KEY_FILE),
+    cert: fs.readFileSync(process.env.HTTPS_SSL_CERT_FILE),
+  };
+  const port = parseInt(notEmpty(process.env.SERVER_SSL_PORT), 10);
+  const server = https.createServer(options, app).listen(port, () => {
+    console.log("HTTPS server listening on port " + port);
+  });
+}
 
 // We export the listener as it will be handy for our development hot reloader.
 export default listener;
