@@ -7,6 +7,6 @@ const { exec } = require('../utils.js');
 
 const buildOutput = pathResolve(appRootPath, envVars.BUNDLE_OUTPUT_PATH);
 
-const cmd = `$(npm bin)/rimraf ${buildOutput}`;
+const cmd = `rimraf ${buildOutput}`;
 
 exec(cmd);
