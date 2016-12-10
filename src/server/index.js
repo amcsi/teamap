@@ -175,14 +175,18 @@ const listener = app.listen(port, () =>
 
 // HTTPS
 if (process.env.HTTPS_SSL_KEY_FILE) {
-  const options = {
-    key: fs.readFileSync(process.env.HTTPS_SSL_KEY_FILE),
-    cert: fs.readFileSync(process.env.HTTPS_SSL_CERT_FILE),
-  };
-  const port = parseInt(notEmpty(process.env.SERVER_SSL_PORT), 10);
-  const server = https.createServer(options, app).listen(port, () => {
-    console.log("HTTPS server listening on port " + port);
-  });
+  try {
+    const options = {
+      key: fs.readFileSync(process.env.HTTPS_SSL_KEY_FILE),
+      cert: fs.readFileSync(process.env.HTTPS_SSL_CERT_FILE),
+    };
+    const httpsPort = parseInt(notEmpty(process.env.SERVER_SSL_PORT), 10);
+    https.createServer(options, app).listen(httpsPort, () => {
+      console.log(`HTTPS server listening on port ${httpsPort}`);
+    });
+  } catch (e) {
+    console.error(`Couldn't start HTTPS server: ${e}`);
+  }
 }
 
 // We export the listener as it will be handy for our development hot reloader.
