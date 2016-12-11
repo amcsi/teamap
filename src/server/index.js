@@ -169,7 +169,8 @@ app.use((err: ?Error, req: $Request, res: $Response, next: NextFunction) => { //
 
 // Create an http listener for our express app.
 const port = parseInt(notEmpty(process.env.SERVER_PORT), 10);
-const listener = app.listen(port, () =>
+const listenIp = '0.0.0.0';
+const listener = app.listen(port, listenIp, () =>
   console.log(`Server listening on port ${port}`)
 );
 
@@ -181,7 +182,7 @@ if (process.env.HTTPS_SSL_KEY_FILE) {
       cert: fs.readFileSync(process.env.HTTPS_SSL_CERT_FILE),
     };
     const httpsPort = parseInt(notEmpty(process.env.SERVER_SSL_PORT), 10);
-    https.createServer(options, app).listen(httpsPort, () => {
+    https.createServer(options, app).listen(httpsPort, listenIp, () => {
       console.log(`HTTPS server listening on port ${httpsPort}`);
     });
   } catch (e) {
