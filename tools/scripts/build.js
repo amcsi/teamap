@@ -1,14 +1,25 @@
+/* @flow */
+
 // This script builds a production output of all of our bundles.
 
-const pathResolve = require('path').resolve;
-const appRootPath = require('app-root-path').toString();
-const { exec } = require('../utils.js');
+import webpack from 'webpack';
+import appRootDir from 'app-root-dir';
+import { resolve as pathResolve } from 'path';
+import webpackConfigFactory from '../webpack/configFactory';
+import projConfig from '../../config/private/project';
+import { exec } from '../utils';
 
-const webpackConfigs = pathResolve(appRootPath, './tools/webpack');
-const clientConfig = pathResolve(webpackConfigs, 'client.config.js');
-const middlewareConfig = pathResolve(webpackConfigs, 'universalMiddleware.config.js');
-const serverConfig = pathResolve(webpackConfigs, 'server.config.js');
+// First clear the build output dir.
+exec(`rimraf ${pathResolve(appRootDir.get(), projConfig.buildOutputPath)}`);
 
-const cmd = `npm run clean && webpack --config ${clientConfig} && webpack --config ${middlewareConfig} && webpack --config ${serverConfig}`;
-
-exec(cmd);
+// Get our "fixed" bundle names
+Object.keys(projConfig.bundles)
+// And the "additional" bundle names
+.concat(Object.keys(projConfig.additionalNodeBundles))
+// And then build them all.
+.forEach((bundleName) => {
+  const compiler = webpack(
+    webpackConfigFactory({ target: bundleName, mode: 'production' }),
+  );
+  compiler.run((err, stats) => console.log(stats.toString({ colors: true })));
+});

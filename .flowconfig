@@ -12,8 +12,8 @@
 # Official "flow-typed" repository definitions.
 flow-typed/npm
 
-# Custom definitions.
-tools/flow/definitions/
+# Type extensions.
+tools/flow/typeExtensions/
 
 # Note: the following definitions come bundled with flow. It can be handy
 # to reference them.
@@ -32,4 +32,4 @@ tools/flow/definitions/
 module.name_mapper='^\(.*\)\.\(css\|eot\|gif\|ico\|jpg\|jpeg\|less\|otf\|mp3\|mp4\|ogg\|png\|sass\|scss\|sss\|svg\|swf\|ttf\|webp\|woff\|woff2\)$' -> '<PROJECT_ROOT>/tools/flow/stubs/WebpackAsset.js.flow'
 
 [version]
-0.34.0
+0.37.0

@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { Location } from '../../../shared/universal/types/react-router';
-import type { Dispatch, ThunkAction } from '../../../shared/universal/types/redux';
-import runTasksForLocation from '../../../shared/universal/routeTasks/runTasksForLocation';
+import type { Location } from '../../../shared/types/react-router';
+import type { Dispatch, ThunkAction } from '../../../shared/types/redux';
+import runTasksForLocation from '../../../shared/routeTasks/runTasksForLocation';
 
 function executeTasks(location: Location, dispatch: Dispatch<ThunkAction>) {
   const tasksToExecute = window && window.APP_STATE
@@ -27,7 +27,7 @@ function executeTasks(location: Location, dispatch: Dispatch<ThunkAction>) {
   const executingTasks = runTasksForLocation(
     location,
     tasksToExecute,
-    { dispatch }
+    { dispatch },
   );
 
   if (executingTasks) {
