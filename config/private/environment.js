@@ -82,9 +82,10 @@ registerEnvFile();
 
 export default {
   // The host on which the server should run.
-  host: getStringEnvVar('SERVER_HOST', 'localhost'),
+  host: getStringEnvVar('SERVER_HOST', '0.0.0.0'),
   // The port on which the server should run.
   port: getIntEnvVar('SERVER_PORT', 1337),
+  httpsPort: getStringEnvVar('SERVER_SSL_PORT', 1338),
   // Enable SSR rendering of the React application?
   // It can be useful to disable this in development in order to debug complex
   // issues with your React components.

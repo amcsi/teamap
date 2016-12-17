@@ -16,6 +16,10 @@ import serviceWorker from './middleware/serviceWorker';
 import errorHandlers from './middleware/errorHandlers';
 import projConfig from '../../config/private/project';
 import envConfig from '../../config/private/environment';
+import fs from 'fs';
+import https from 'https';
+
+const appRootPath = appRoot.toString();
 
 // Create our express based server.
 const app = express();
@@ -56,6 +60,21 @@ const listener = app.listen(envConfig.port, envConfig.host, () =>
   console.log(`Server listening on port ${envConfig.port}`),
 );
 
-// We export the listener as it will be handy for our development hot reloader,
+// HTTPS
+if (process.env.HTTPS_SSL_KEY_FILE) {
+  try {
+    const options = {
+      key: fs.readFileSync(process.env.HTTPS_SSL_KEY_FILE),
+      cert: fs.readFileSync(process.env.HTTPS_SSL_CERT_FILE),
+    };
+    https.createServer(options, app).listen(envConfig.httpsPort, listenIp, () => {
+      console.log(`HTTPS server listening on port ${httpsPort}`);
+    });
+  } catch (e) {
+    console.error(`Couldn't start HTTPS server: ${e}`);
+  }
+}
+
+// We export the listener as it will be handy for our development hot reloader.
 // or for exposing a general extension layer for application customisations.
 export default listener;
