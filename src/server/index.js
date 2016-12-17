@@ -19,8 +19,6 @@ import envConfig from '../../config/private/environment';
 import fs from 'fs';
 import https from 'https';
 
-const appRootPath = appRoot.toString();
-
 // Create our express based server.
 const app = express();
 
