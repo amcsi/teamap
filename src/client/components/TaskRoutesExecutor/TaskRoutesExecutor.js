@@ -1,9 +1,9 @@
 /* @flow */
 
 import { Children, Component } from 'react';
-import type { Location } from '../../../shared/universal/types/react-router';
-import type { Dispatch, ThunkAction } from '../../../shared/universal/types/redux';
-import type { ReactNode } from '../../../shared/universal/types/react';
+import type { Location } from '../../../shared/types/react-router';
+import type { Dispatch, ThunkAction } from '../../../shared/types/redux';
+import type { ReactNode } from '../../../shared/types/react';
 import executeTasks from './executeTasks';
 
 type Props = {

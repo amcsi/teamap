@@ -1,7 +1,14 @@
-const { createNotification } = require('../utils');
+/* @flow */
+
+const { log } = require('../utils');
 
 class ListenerManager {
-  constructor(listener, name) {
+  name: string;
+  lastConnectionKey: number;
+  connectionMap: { [key: string|number]: Object };
+  listener: Object;
+
+  constructor(listener : Object, name : string) {
     this.name = name || 'listener';
     this.lastConnectionKey = 0;
     this.connectionMap = {};
@@ -33,21 +40,21 @@ class ListenerManager {
       if (this.listener) {
         this.killAllConnections();
 
-        createNotification({
+        log({
           title: this.name,
           level: 'info',
           message: 'Destroyed all existing connections.',
         });
 
         this.listener.close(() => {
-          createNotification({
+          log({
             title: this.name,
             level: 'info',
             message: 'Closed listener.',
           });
-        });
 
-        resolve();
+          resolve();
+        });
       } else {
         resolve();
       }
@@ -55,4 +62,4 @@ class ListenerManager {
   }
 }
 
-module.exports = ListenerManager;
+export default ListenerManager;

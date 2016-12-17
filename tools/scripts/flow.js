@@ -1,12 +1,14 @@
-const existsSync = require('fs').existsSync;
-const resolvePath = require('path').resolve;
-const appRootPath = require('app-root-path').toString();
-const { exec, createNotification } = require('../utils');
+/* @flow */
 
-const flowTypedDir = resolvePath(appRootPath, 'flow-typed');
+// Runs flow type checking.
 
-if (!existsSync(flowTypedDir)) {
-  createNotification({
+import { existsSync } from 'fs';
+import { resolve as resolvePath } from 'path';
+import appRootDir from 'app-root-dir';
+import { exec, log } from '../utils';
+
+if (!existsSync(resolvePath(appRootDir.get(), './flow-typed'))) {
+  log({
     title: 'flow',
     level: 'warn',
     message: 'You haven\'t installed the flow-typed definitions. Please run the `npm run flow:defs` command if you would like to install them.',

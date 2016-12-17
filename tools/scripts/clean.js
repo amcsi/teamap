@@ -1,12 +1,12 @@
+/* @flow */
+
 // This script removes any exisitng build output.
 
-const pathResolve = require('path').resolve;
-const appRootPath = require('app-root-path').toString();
-const envVars = require('../config/envVars');
-const { exec } = require('../utils.js');
+import { resolve as pathResolve } from 'path';
+import appRootDir from 'app-root-dir';
+import { exec } from '../utils';
+import projConfig from '../../config/private/project';
 
-const buildOutput = pathResolve(appRootPath, envVars.BUNDLE_OUTPUT_PATH);
-
-const cmd = `$(npm bin)/rimraf ${buildOutput}`;
+const cmd = `$(npm bin)/rimraf ${pathResolve(appRootDir.get(), projConfig.buildOutputPath)}`;
 
 exec(cmd);
