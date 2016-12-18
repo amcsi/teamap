@@ -12,9 +12,6 @@ COPY tools/scripts/preinstall.js /src/tools/scripts/preinstall.js
 # Install yarn and install packages with it.
 RUN npm i yarn -g && yarn install
 
-# Copy the base environment variables.
-COPY .env_example .env
-
 # Now copy the rest of the files.
 COPY . .
 

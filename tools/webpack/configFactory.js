@@ -17,6 +17,16 @@ import envConfig from '../../config/private/environment';
 import htmlPageConfig from '../../config/public/htmlPage';
 import plugins from '../../config/private/plugins';
 import type { BuildOptions } from '../types';
+import { sharedKeys } from '../../src/shared/types/env';
+
+const sharedEnv = (() => {
+  // Pass in the env vars defined in the shared type.
+  const sharedEnv = {};
+  sharedKeys.forEach((key) => {
+    sharedEnv[`process.env.${key}`] = JSON.stringify(process.env[key]);
+  });
+  return sharedEnv;
+})();
 
 /**
  * This function is responsible for creating the webpack configuration for
@@ -229,6 +239,8 @@ export default function webpackConfigFactory(buildOptions: BuildOptions) {
         'process.env.IS_SERVER': JSON.stringify(isServer),
         // Is this a node bundle?
         'process.env.IS_NODE': JSON.stringify(isNode),
+        // The rest of the env stuff
+        ...sharedEnv,
       }),
 
       // Generates a JSON file containing a map of all the output files for
