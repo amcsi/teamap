@@ -4,8 +4,7 @@ import uuid from 'uuid';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import type { Middleware, $Request, $Response, NextFunction } from 'express';
-import projConfig from '../../../config/private/project';
-import envConfig from '../../../config/private/environment';
+import config from '../../../config';
 
 const cspConfig = {
   directives: {
@@ -47,12 +46,12 @@ const cspConfig = {
 };
 
 // Add any additional CSP from the static config.
-Object.keys(projConfig.cspExtensions).forEach((key) => {
+Object.keys(config.cspExtensions).forEach((key) => {
   if (cspConfig.directives[key]) {
     cspConfig.directives[key] = cspConfig.directives[key]
-      .concat(projConfig.cspExtensions[key]);
+      .concat(config.cspExtensions[key]);
   } else {
-    cspConfig.directives[key] = projConfig.cspExtensions[key];
+    cspConfig.directives[key] = config.cspExtensions[key];
   }
 });
 
@@ -61,7 +60,7 @@ if (process.env.NODE_ENV === 'development') {
   // is used to host our client bundle to our csp config.
   Object.keys(cspConfig.directives).forEach((directive) => {
     cspConfig.directives[directive].push(
-      `${envConfig.host}:${envConfig.clientDevServerPort}`,
+      `${config.host}:${config.clientDevServerPort}`,
     );
   });
 }
@@ -70,7 +69,7 @@ if (process.env.NODE_ENV === 'development') {
 // inline scripts as being safe for execution against our content security policy.
 // @see https://helmetjs.github.io/docs/csp/
 function nonceMiddleware(req: $Request, res: $Response, next: NextFunction) {
-  res.locals.nonce = uuid(); // eslint-disable-line no-param-reassign
+  res.locals.nonce = uuid.v4(); // eslint-disable-line no-param-reassign
   next();
 }
 
