@@ -7,6 +7,7 @@ import 'source-map-support/register';
 
 import express from 'express';
 import compression from 'compression';
+import https from 'https';
 import { resolve as pathResolve } from 'path';
 import appRootDir from 'app-root-dir';
 import reactApplication from './middleware/reactApplication';
@@ -57,10 +58,25 @@ app.get('*', reactApplication);
 app.use(...errorHandlers);
 
 // Create an http listener for our express app.
-const listener = app.listen(config.port, config.host, () =>
+const listener = app.listen(config.port, config.listenHost, () =>
   console.log(`Server listening on port ${config.port}`),
 );
 
-// We export the listener as it will be handy for our development hot reloader,
+// HTTPS
+if (config.https.keyFile) {
+  try {
+    const options = {
+      key: config.https.keyFile,
+      cert: config.https.certFile,
+    };
+    https.createServer(options, app).listen(config.https.port, config.listenHost, () => {
+      console.log(`HTTPS server listening on port ${config.https.port}`);
+    });
+  } catch (e) {
+    console.error(`Couldn't start HTTPS server: ${e}`);
+  }
+}
+
+// We export the listener as it will be handy for our development hot reloader.
 // or for exposing a general extension layer for application customisations.
 export default listener;

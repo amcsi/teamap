@@ -19,10 +19,18 @@ if (process.env.IS_CLIENT) {
 
 const config = {
   // The host on which the server should run.
-  host: getStringEnvVar('SERVER_HOST', 'localhost'),
+  host: getStringEnvVar('SERVER_HOST', '127.0.0.1'),
+  listenHost: getStringEnvVar('SERVER_LISTEN_HOST', '0.0.0.0'),
 
   // The port on which the server should run.
   port: getIntEnvVar('SERVER_PORT', 1337),
+  https: {
+    port: getIntEnvVar('SERVER_SSL_PORT', 1338),
+    keyFile: getStringEnvVar('HTTPS_SSL_KEY_FILE', ''),
+    certFile: getStringEnvVar('HTTPS_SSL_CERT_FILE', ''),
+  },
+
+  googleMapsApiKey: getStringEnvVar('GOOGLE_MAPS_API_KEY', ''),
 
   // The port on which the client bundle development server should run.
   clientDevServerPort: getIntEnvVar('CLIENT_DEVSERVER_PORT', 7331),
@@ -462,6 +470,7 @@ export const clientConfig = filterObject(
   // client config, supplying a truthy value to them in order to ensure they
   // get included in the client bundle.
   {
+    googleMapsApiKey: true,
     // This is here as an example showing that you can expose environment
     // variables too.
     welcomeMessage: true,

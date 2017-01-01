@@ -1,6 +1,11 @@
 html {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  height: 100%;
 }
 
 *,
@@ -19,3 +24,7 @@ ul {
 }
 
 ul li { display: inline; margin: 0 .5rem; }
+
+#app {
+  height: 100%;
+}

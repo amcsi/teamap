@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { CodeSplitProvider, createRenderContext } from 'code-split-component';
 import Helmet from 'react-helmet';
 import generateHTML from './generateHTML';
-import DemoApp from '../../../shared/components/DemoApp';
+import App from '../../../shared/components/App';
 import runTasksForLocation from '../../../shared/routeTasks/runTasksForLocation';
 import configureStore from '../../../shared/redux/configureStore';
 import config from '../../../../config';
@@ -61,7 +61,7 @@ function reactApplicationMiddleware(request: $Request, response: $Response) {
       <CodeSplitProvider context={codeSplitContext}>
         <ServerRouter location={request.url} context={reactRouterContext}>
           <Provider store={store}>
-            <DemoApp />
+            <App />
           </Provider>
         </ServerRouter>
       </CodeSplitProvider>,
